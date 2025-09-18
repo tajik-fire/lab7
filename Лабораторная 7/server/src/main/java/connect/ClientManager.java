@@ -21,7 +21,7 @@ public class ClientManager implements Runnable {
 
     public ClientManager(int port, CommandProcessor commandProcessor, AuthService authService, ExecutorService responseSendingThreadPool) throws IOException {
         this.serverSocket = new ServerSocket(port);
-        this.serverSocket.setSoTimeout(200); // короткий таймаут для accept()
+        this.serverSocket.setSoTimeout(200); 
         this.commandProcessor = commandProcessor;
         this.authService = authService;
         this.responseSendingThreadPool = responseSendingThreadPool;
@@ -61,7 +61,7 @@ public class ClientManager implements Runnable {
                     final ObjectOutputStream finalOut = out;
                     final Socket finalClientSocket = clientSocket;
                     new Thread(() -> processAuthCommand(request, finalOut, finalClientSocket)).start();
-                    return; // Завершаем обработку в текущем потоке, аутентификация будет в новом
+                    return; 
                 }
                 try {
                     authenticatedUser = authService.authenticate(request.getUsername(), request.getPassword()).orElse(null);
